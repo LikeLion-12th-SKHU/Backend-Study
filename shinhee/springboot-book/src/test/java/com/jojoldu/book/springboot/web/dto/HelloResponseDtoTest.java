@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,7 +23,7 @@ public class HelloResponseDtoTest {
         //when
         HelloResponseDto dto = new HelloResponseDto(name, amount);
 
-        //ten
+        //then
         assertThat(dto.getName()).isEqualTo(name);
         // assertj라는 테스트 검증 메소드, 검증하고 싶은 대상을 메소드 인자로 받음
         assertThat(dto.getAmount()).isEqualTo(amount);
@@ -42,6 +43,9 @@ public class HelloResponseDtoTest {
             mvc.perform(get("/hello"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(hello));
+
+
+
         }
     }
 }

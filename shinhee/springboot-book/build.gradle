@@ -30,6 +30,7 @@ dependencies {
     compile('org.projectlombok:lombok') //롬복 설치
 //    compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-mustache')
+    complie('org.springframework.boot:spring-boot-starter)
 //    compile('com.h2database:h2')
 
 //    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
