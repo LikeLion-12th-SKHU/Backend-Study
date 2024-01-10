@@ -21,3 +21,9 @@ dependencies {
 
 `build.gradle` 에 `spring-boot-starter-data-jpa` 와 `h2` 를 추가해준다. <br>
 `spring-boot-starter-data-jpa` 는 스프링부트용 Spring Data JPA 추상화 라이브러리로, 스프링부트 버전에 맞춰 자동으로 JPA 관련 라이브러리 버전을 관리해주는 것이다. `h2`는 인메모리형 관계형 데이터베이스로, 별도의 설치 없이 메모리에서 실행되기 때문에 애플리케이션을 재시작할 때마다 초기화된다는 특징이 있다.
+
+### [Domain](https://github.com/Rommmu/Backend-Study-12th/blob/main/rommmu/WIL/week03/domain.md)
+### [Controller](https://github.com/Rommmu/Backend-Study-12th/blob/main/rommmu/WIL/week03/controller.md)
+### [Dto](https://github.com/Rommmu/Backend-Study-12th/blob/main/rommmu/WIL/week03/dto.md)
+### [Service](https://github.com/Rommmu/Backend-Study-12th/blob/main/rommmu/WIL/week03/service.md)
+### [application.properties](https://github.com/Rommmu/Backend-Study-12th/blob/main/rommmu/WIL/week03/application.properties.md)
