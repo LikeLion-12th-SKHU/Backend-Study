@@ -25,4 +25,10 @@ public class Department {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "department")
     List<Student> students;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "department")
+    List<Professor> professors;
 }

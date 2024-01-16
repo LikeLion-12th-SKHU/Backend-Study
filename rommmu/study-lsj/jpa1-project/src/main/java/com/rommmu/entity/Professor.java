@@ -10,17 +10,15 @@ import java.util.List;
 
 @Data
 @Entity
-public class Student {
-
+public class Professor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String studentNo;
     String name;
     String phone;
-    String sex;
     String email;
+    String office;
 
     @ManyToOne
     @JoinColumn(name = "departmentId")
@@ -29,6 +27,6 @@ public class Student {
     @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "student")
-    List<Sugang> sugangs;
+    @OneToMany(mappedBy = "professor")
+    List<Lecture> lectures;
 }
