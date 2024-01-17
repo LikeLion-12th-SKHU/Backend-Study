@@ -4,7 +4,6 @@ import lombok.*;
 import org.example.exception.ErrorCode;
 import org.example.exception.SuccessCode;
 
-
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
