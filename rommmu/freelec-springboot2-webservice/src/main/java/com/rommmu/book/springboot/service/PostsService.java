@@ -2,6 +2,8 @@ package com.rommmu.book.springboot.service;
 
 import com.rommmu.book.springboot.domain.posts.Posts;
 import com.rommmu.book.springboot.domain.posts.PostsRepository;
+import com.rommmu.book.springboot.exception.ErrorCode;
+import com.rommmu.book.springboot.exception.model.NotFoundException;
 import com.rommmu.book.springboot.web.dto.PostsListResponseDto;
 import com.rommmu.book.springboot.web.dto.PostsResponseDto;
 import com.rommmu.book.springboot.web.dto.PostsSaveRequestDto;
@@ -26,7 +28,7 @@ public class PostsService {
     @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.POSTS_NOT_FOUND_EXCEPTION, ErrorCode.POSTS_NOT_FOUND_EXCEPTION.getMessage() + id));
 
         posts.update(requestDto.getTitle(), requestDto.getContent());
 
@@ -41,10 +43,9 @@ public class PostsService {
         postsRepository.delete(posts);
     }
 
-    @Transactional(readOnly = true)
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+                .orElseThrow(() -> new NotFoundException(ErrorCode.POSTS_NOT_FOUND_EXCEPTION, ErrorCode.POSTS_NOT_FOUND_EXCEPTION.getMessage() + id));
 
         return new PostsResponseDto(entity);
     }
