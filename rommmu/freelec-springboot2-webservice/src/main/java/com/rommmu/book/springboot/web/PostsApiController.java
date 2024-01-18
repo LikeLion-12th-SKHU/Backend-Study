@@ -1,6 +1,6 @@
 package com.rommmu.book.springboot.web;
 
-import com.rommmu.book.springboot.service.posts.PostsService;
+import com.rommmu.book.springboot.service.PostsService;
 import com.rommmu.book.springboot.web.dto.PostsResponseDto;
 import com.rommmu.book.springboot.web.dto.PostsSaveRequestDto;
 import com.rommmu.book.springboot.web.dto.PostsUpdateRequestDto;
