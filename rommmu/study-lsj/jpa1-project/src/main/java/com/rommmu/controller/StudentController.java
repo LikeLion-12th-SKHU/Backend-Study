@@ -7,11 +7,13 @@ import com.rommmu.repository.DepartmentRepository;
 import com.rommmu.repository.StudentRepository;
 import com.rommmu.service.DepartmentService;
 import com.rommmu.service.StudentService;
+import com.rommmu.validation.ValidationSequence;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,7 +50,7 @@ public class StudentController {
 
     @PostMapping("create")
     public String create(Model model,
-                         @Valid StudentEdit studentEdit, BindingResult bindingResult) {
+                         @Validated(ValidationSequence.class) StudentEdit studentEdit, BindingResult bindingResult) {
         try {
             studentService.insert(studentEdit, bindingResult);
             return "redirect:list";
@@ -71,7 +73,7 @@ public class StudentController {
 
     @PostMapping(value="edit", params="cmd=save")
     public String edit(Model model,
-                       @Valid StudentEdit studentEdit, BindingResult bindingResult) {
+                       @Validated(ValidationSequence.class) StudentEdit studentEdit, BindingResult bindingResult) {
         try {
             studentService.update(studentEdit, bindingResult);
             return "redirect:list";
