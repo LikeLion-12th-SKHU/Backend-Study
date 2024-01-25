@@ -1,7 +1,7 @@
 package com.example.jpa1.controller;
 
-import com.example.jpa1.domain.Department;
-import com.example.jpa1.repository.DepartmentRepository;
+import com.example.jpa1.domain.department.Department;
+import com.example.jpa1.domain.department.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

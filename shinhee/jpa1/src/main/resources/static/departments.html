@@ -74,7 +74,7 @@
                 this.showDialog = false;
             },
             remove: function() {
-                if (confirm("삭제하시겠습니까?") == false) return;
+                if (confirm("삭제하시겠습니까?") === false) return;
                 axios.delete('department/' + this.department.id)
                     .then(response => this.reload());
                 this.showDialog = false;
