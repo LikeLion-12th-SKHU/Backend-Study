@@ -17,3 +17,4 @@ table.list th { padding: 4px; border: 1px solid gray;  background-color: #eee; }
 input { padding: 4px; }
 select { padding: 4px; }
 div.error { color: red; }
+tr[href]:hover { background-color: #ffa; cursor: pointer; }
