@@ -1,6 +1,6 @@
 package com.rommmu.validation;
 
-public interface ValidationGroups {
+public class ValidationGroups {
     public interface NotEmptyGroup {};
     public interface NotBlankGroup {};
     public interface SizeGroup {};
