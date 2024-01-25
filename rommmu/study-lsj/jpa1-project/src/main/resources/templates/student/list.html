@@ -1,16 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/common.css}" />
+    <link rel="stylesheet" type="text/css" href="/common.css" />
     <style>
-        form { margin-bottom: 4px; }
         a.btn { float: right; margin-top: -40px; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>학생목록</h1>
+    <a href="create" class="btn">학생등록</a>
     <table class="list">
         <thead>
         <tr>
@@ -26,7 +26,7 @@
         <tbody>
         <tr th:each="st : ${ students }">
             <td th:text="${ st.id }"></td>
-            <td th:text="${ st.studentNo }"></td>
+            <td><a th:text="${ st.studentNo }" th:href="${ 'edit?id=' + st.id }"></a></td>
             <td th:text="${ st.name }"></td>
             <td th:text="${ st.department.name }"></td>
             <td th:text="${ st.phone }"></td>

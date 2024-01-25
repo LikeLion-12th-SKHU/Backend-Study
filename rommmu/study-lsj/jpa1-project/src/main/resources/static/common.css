@@ -10,16 +10,10 @@ div.container { width: 800px; margin: 10px auto; font-size: 10pt; }
     transform: translateY(2px);
     background: #ccc; }
 
-.btn.red { background: linear-gradient(#fff, #fcc); }
-.btn.blue { background: linear-gradient(#fff, #ccf); }
-.btn.red:active { background: #fcc; }
-.btn.blue:active { background: #ccf; }
-
 table.list { border-collapse: collapse; width: 100%; }
 table.list td { padding: 4px; border: 1px solid gray; }
 table.list th { padding: 4px; border: 1px solid gray;  background-color: #eee; }
 
 input { padding: 4px; }
 select { padding: 4px; }
-
-tr[href]:hover { cursor: pointer; background-color: #ffa; }
+div.error { color: red; }

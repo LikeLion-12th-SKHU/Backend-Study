@@ -2,11 +2,16 @@ package com.rommmu.controller;
 
 import com.rommmu.entity.Department;
 import com.rommmu.entity.Student;
+import com.rommmu.model.StudentEdit;
 import com.rommmu.repository.DepartmentRepository;
 import com.rommmu.repository.StudentRepository;
+import com.rommmu.service.DepartmentService;
+import com.rommmu.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +22,26 @@ public class StudentController {
 
     @Autowired
     StudentRepository studentRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
+    @Autowired
+    StudentService studentService;
+    @Autowired
+    DepartmentService departmentService;
 
-//    @RequestMapping("list")
-//    public String list(Model model) {
-//        List<Student> students = studentRepository.findAll();
-//        model.addAttribute("students", students);
+//    @RequestMapping("test1")
+//    public String test1(Model model) {
+//        model.addAttribute("students",
+//                studentRepository.findByDepartmentProfessorsName("이몽룡"));
 //        return "student/list";
 //    }
-
-    @RequestMapping("test1")
-    public String test1(Model model) {
-        model.addAttribute("students",
-                studentRepository.findByDepartmentProfessorsName("이몽룡"));
-        return "student/list";
-    }
-
-    @RequestMapping("test2")
-    public String test2(Model model) {
-        model.addAttribute("students",
-                studentRepository.findBySugangsLectureTitle("자료구조"));
-        return "student/list";
-    }
+//
+//    @RequestMapping("test2")
+//    public String test2(Model model) {
+//        model.addAttribute("students",
+//                studentRepository.findBySugangsLectureTitle("자료구조"));
+//        return "student/list";
+//    }
 //
 //    @RequestMapping("test3")
 //    public String test3(Model model) {
@@ -80,44 +84,69 @@ public class StudentController {
 //                studentRepository.findByDepartmentIdOrderByNameDesc(1));
 //        return "student/list";
 //    }
+    @GetMapping("list")
+    public String list(Model model) {
+        List<Student> students = studentService.findAll();
+        model.addAttribute("students", students);
+        return "student/list";
+    }
 
-//   Autowired DepartmentRepository departmentRepository;
-//
+    @GetMapping("create")
+    public String create(Model model) {
+        StudentEdit studentEdit = new StudentEdit();
+        List<Department> departments = departmentService.findAll();
+        model.addAttribute("studentEdit", studentEdit);
+        model.addAttribute("departments", departments);
+        return "student/edit";
+    }
 
-//
-//    @GetMapping("create")
-//    public String create(Model model) {
-//        Student student = new Student();
-//        List<Department> departments = departmentRepository.findAll();
-//        model.addAttribute("student", student);
-//        model.addAttribute("departments", departments);
-//        return "student/edit";
-//    }
-//
-//    @PostMapping("create")
-//    public String create(Model model, Student student) {
-//        studentRepository.save(student);
-//        return "redirect:list";
-//    }
-//
-//    @GetMapping("edit")
-//    public String edit(Model model, @RequestParam("id") int id) {
-//        Student student = studentRepository.findById(id).get();
-//        List<Department> departments = departmentRepository.findAll();
-//        model.addAttribute("student", student);
-//        model.addAttribute("departments", departments);
-//        return "student/edit";
-//    }
-//
-//    @PostMapping(value="edit", params="cmd=save")
-//    public String edit(Model model, Student student) {
-//        studentRepository.save(student);
-//        return "redirect:list";
-//    }
-//
-//    @PostMapping(value="edit", params="cmd=delete")
-//    public String delete(Model model, @RequestParam("id") int id) {
-//        studentRepository.deleteById(id);
-//        return "redirect:list";
-//    }
+    @PostMapping("create")
+    public String create(Model model,
+                         @Valid StudentEdit studentEdit,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("departments", departmentService.findAll());
+            return "student/edit";
+        }
+        Student student2 = studentService.findByStudentNo(studentEdit.getStudentNo());
+        if (student2 != null) {
+            bindingResult.rejectValue("studentNo", null, "학번이 중복됩니다.");
+            model.addAttribute("departments", departmentService.findAll());
+            return "student/edit";
+        }
+        studentService.insert(studentEdit);
+        return "redirect:list";
+    }
+
+    @GetMapping("edit")
+    public String edit(Model model, int id) {
+        StudentEdit studentEdit = studentService.findOne(id);
+        List<Department> departments = departmentService.findAll();
+        model.addAttribute("studentEdit", studentEdit);
+        model.addAttribute("departments", departments);
+        return "student/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(Model model,
+                       @Valid StudentEdit studentEdit, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("departments", departmentService.findAll());
+            return "student/edit";
+        }
+        Student student2 = studentService.findByStudentNo(studentEdit.getStudentNo());
+        if (student2 != null && student2.getId() != studentEdit.getId()) {
+            bindingResult.rejectValue("studentNo", null, "학번이 중복됩니다.");
+            model.addAttribute("departments", departmentService.findAll());
+            return "student/edit";
+        }
+        studentService.update(studentEdit);
+        return "redirect:list";
+    }
+
+    @GetMapping("delete")
+    public String delete(Model model, int id) {
+        studentService.delete(id);
+        return "redirect:list";
+    }
 }
