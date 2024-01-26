@@ -8,7 +8,6 @@ import com.rommmu.repository.StudentRepository;
 import com.rommmu.service.DepartmentService;
 import com.rommmu.service.StudentService;
 import com.rommmu.validation.ValidationSequence;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
