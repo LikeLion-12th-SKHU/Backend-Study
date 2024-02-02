@@ -1,5 +1,6 @@
 package org.example.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.example.exception.ErrorCode;
 import org.example.exception.SuccessCode;
@@ -7,8 +8,8 @@ import org.example.exception.SuccessCode;
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(force = true)
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> { // 제네릭 타입으로 선언
 
     private final int code;
