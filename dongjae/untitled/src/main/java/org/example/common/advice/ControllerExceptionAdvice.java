@@ -6,7 +6,9 @@ import org.example.common.dto.BaseResponse;
 import org.example.exception.model.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import org.example.exception.ErrorCode;
+
+import java.util.Objects;
 
 @Slf4j
 @RestControllerAdvice
@@ -48,32 +52,14 @@ public class ControllerExceptionAdvice {
         return BaseResponse.error(ErrorCode.REQUEST_METHOD_VALIDATION_EXCEPTION, e.getMessage());
     }
 
-//    // Validation 관련 예외 처리: 추후 추가 예정
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    protected BaseResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-//        FieldError fieldError = Objects.requireNonNull(e.getFieldError());
-//        log.error("Validation error for field {}: {}", fieldError.getField(), fieldError.getDefaultMessage());
-//        return BaseResponse.error(ErrorCode.VALIDATION_REQUEST_MISSING_EXCEPTION, String.format("%s. (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
-//    }
-
-//    // 인증 관련 예외 처리: 추후 추가 예정
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(BadCredentialsException.class)
-//    protected BaseResponse badCredentialsException(final BadCredentialsException e) {
-//        log.error("Bad Credentials: {}", e.getMessage(), e);
-//        return BaseResponse.error(ErrorCode.AUTHORIZE_FAILED_EXCEPTION, ErrorCode.AUTHORIZE_FAILED_EXCEPTION.getMessage());
-//    }
-
-    /**
-     * 413 Payload Too Large
-     */
-//    @ExceptionHandler(MaxUploadSizeExceededException.class)
-//    @ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
-//    public BaseResponse fileSizeLimitExceeded(final MaxUploadSizeExceededException e) {
-//        log.error("File Size Limit Exceeded: {}", e.getMessage(), e);
-//        return BaseResponse.error(ErrorCode.MAX_UPLOAD_SIZE_EXCEED_EXCEPTION, e.getMessage());
-//    }
+    // Validation 관련 예외 처리
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected BaseResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        FieldError fieldError = Objects.requireNonNull(e.getBindingResult().getFieldError());
+        log.error("Validation error for field {}: {}", fieldError.getField(), fieldError.getDefaultMessage());
+        return BaseResponse.error(ErrorCode.VALIDATION_REQUEST_MISSING_EXCEPTION, String.format("%s. (%s)", fieldError.getDefaultMessage(), fieldError.getField()));
+    }
 
     /**
      * 500 Internal Server Error
